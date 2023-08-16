@@ -1,9 +1,11 @@
 
 /**
  * Calculates the square of a number.
- * @param {number} num - The number to calculate the square of.
+ * @param {number} num - The number.
  * @returns {number} The square of the number.
  */
-export function square(num) {
+function square(num) {
   return num * num;
 }
+
+export { square };

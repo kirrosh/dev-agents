@@ -1,6 +1,6 @@
 
 /**
- * Performs multiplication of two numbers.
+ * Multiplies two numbers.
  * @param {number} num1 - The first number.
  * @param {number} num2 - The second number.
  * @returns {number} The product of the two numbers.
