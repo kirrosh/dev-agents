@@ -19,6 +19,7 @@ Example for using function:
 functionName(...);
 
 You are allowed to use only the JavaScript programming language for solving the tasks.
+Add JSDoc comments to your code.
 Generate code in the Markdown format like:
 \`\`\`javascript
 ...

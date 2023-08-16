@@ -3,6 +3,7 @@ import { IAnalystOutput, analystChain } from "./src/chains/analyst.ts";
 import { developerChain } from "./src/chains/developer.ts";
 import { moduleDeveloperChain } from "./src/chains/module-developer.ts";
 import { parseMarkdownCode } from "./parseMarkdownCode.ts";
+import { unitTestChain } from "./src/chains/unit-test.ts";
 
 // remove folder ./dist
 Deno.removeSync("./dist", { recursive: true });
@@ -11,6 +12,8 @@ Deno.removeSync("./dist", { recursive: true });
 Deno.mkdirSync("./dist");
 // creatae folder ./dist/modules
 Deno.mkdirSync("./dist/modules");
+// creatae folder ./dist/tests
+Deno.mkdirSync("./dist/tests");
 
 const overallChain = new SimpleSequentialChain({
   chains: [analystChain],
@@ -116,10 +119,15 @@ Example of ${dependentTask.name}:
 ${res}
   `;
 
-    console.log(moduleMessage);
     const moduleRes = await moduleDeveloperChain.run(moduleMessage);
+    const unitTestRes = await unitTestChain.run(moduleMessage);
     const parsed = parseMarkdownCode(moduleRes);
+    const parsedTest = parseMarkdownCode(unitTestRes);
     Deno.writeTextFileSync(`dist/modules/${dependentTask.name}.js`, parsed);
+    Deno.writeTextFileSync(
+      `dist/tests/${dependentTask.name}.test.js`,
+      parsedTest
+    );
   }
 }
 
