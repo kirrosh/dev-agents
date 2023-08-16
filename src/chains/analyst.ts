@@ -1,4 +1,3 @@
-import { LLMChain } from "npm:langchain@^0.0.127/chains";
 import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
@@ -13,9 +12,9 @@ export const analystZodSchema = z.object({
     z.object({
       index: z.number(),
       name: z.string(),
-      moduleName: z.string(),
       description: z.string(),
-      dependencies: z.array(z.number()),
+      units: z.array(z.string()),
+      type: z.enum(["unit", "module"]),
     })
   ),
 });
@@ -24,17 +23,15 @@ export type IAnalystOutput = z.infer<typeof analystZodSchema>;
 
 const template = `
 You are an analyst in a software development team.
-
 Thoroughly understand the problem to identify its key components.
-Merge similar tasks, removing unnecessary complexity.
-Break down the solution into smallest meaningful tasks.
-Ensure tasks can be worked on independently and concurrently.
-Find the entry point to the solution, the first task to be done.
-Identify task dependencies, marking tasks that others depend on.
-Establish dependencies for tasks as needed, indicating task relationships.
-Remove redundant tasks, avoid duplicate efforts.
-
-Return list of tasks with uniqe name (camelCase), description, dependencies (number of task).
+Break down the solution into smallest meaningful components.
+You can use 2 types of components: "unit" and "module".
+Unit is a small piece of code that does one thing and does it well.
+Module is a collection of units that solves a specific problem.
+Define the entry point of the solution and create a "module" component for it.
+Remove redundant components, avoid duplicate efforts.
+If module is using functionality of unit, make sure to include it as a dependency.
+Give task unique name (camelCase).
 `;
 
 const prompt = new ChatPromptTemplate({
@@ -52,5 +49,3 @@ export const analystChain = createStructuredOutputChainFromZod(
     llm: openAIChatModel,
   }
 );
-// export const analystChain = new LLMChain({ llm: openAIChatModel, prompt });
-// export const analystChain = new LLMChain({ llm: openAIChatModel, prompt });

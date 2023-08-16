@@ -8,17 +8,19 @@ import { openAIChatModel } from "../models/models.ts";
 
 const template = `
 You will assume the role of a software developer.
-Task has a name, description and a list of available modules.
-Each module contains a list of functions that you can use.
-Import from modules only the functions that you need.
-Import from each module separately.
-Example for importing module:
-import {{functionName}} from "./modules/{{moduleName}}.js";
 
-Example for using function:
-functionName(...);
+You got a description of components that you have to write.
+There are 2 types of components: "unit" and "module".
+Unit is a small piece of code that does one thing and does it well.
+Module is a collection of units that solves a specific problem.
 
-You are allowed to use only the JavaScript programming language for solving the tasks.
+You have to write a unit.
+Unit should export all functionality just with word "export".
+like this:
+export const myUnit = () => {{
+  // your code here
+}};
+
 Add JSDoc comments to your code.
 Generate code in the Markdown format like:
 \`\`\`javascript
@@ -34,4 +36,4 @@ const prompt = new ChatPromptTemplate({
   inputVariables: ["tasks"],
 });
 
-export const developerChain = new LLMChain({ llm: openAIChatModel, prompt });
+export const unitChain = new LLMChain({ llm: openAIChatModel, prompt });
