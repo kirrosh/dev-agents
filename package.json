@@ -1,0 +1,10 @@
+{
+  "name": "dev-agents",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:kirrosh/dev-agents.git",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12"
+  }
+}
