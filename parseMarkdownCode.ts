@@ -1,7 +1,10 @@
-export const parseMarkdownCode = (markdown: string): string => {
+export const parseMarkdownCode = (
+  markdown: string,
+  lang = "javascript"
+): string => {
   // parse code block from markdown ```typescript
 
-  const codeBlockRegex = /```javascript([\s\S]*?)```/g;
+  const codeBlockRegex = new RegExp(`\`\`\`${lang}([\\s\\S]*?)\`\`\``, "g");
   const codeBlockMatch = codeBlockRegex.exec(markdown);
 
   if (codeBlockMatch) {
