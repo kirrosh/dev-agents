@@ -11,9 +11,9 @@ export async function POST({ request }) {
 	const res = await chain.call({
 		verbose: true,
 		query: `
-  You will assume the role of a software developer.
-  You can only create a component on Svelte fraimwork.
-  You are given a part of documentation.
+You will assume the role of a software developer.
+You can only create a component on Svelte fraimwork.
+You are given a part of documentation.
 
 Write a todo app on svelte framework.
 There hould be an input field with create button.
