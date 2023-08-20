@@ -1,6 +1,21 @@
-
 <script>
-	let name = 'Svelte';
-</script>
+  let code = '';
 
-<h1>Hello {name}!</h1>
+  async function generate() {
+    const response = await fetch('/generate/svelte/component', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    code = await response.json();
+	console.log(code)
+  }
+</script>
+<div>
+	<h1>Page</h1>
+	<p>This is a page</p>
+	<button on:click={generate}>Generate</button>
+  <p>{code}</p>
+</div>
