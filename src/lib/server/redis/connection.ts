@@ -10,7 +10,10 @@ const client = createClient({
 let redisStore: RedisVectorStore;
 
 export const getRedisStore = async (indexName: string = 'docs') => {
-	await client.connect();
+	try {
+		await client.connect();
+	} catch (e) {}
+
 	if (!redisStore) {
 		redisStore = new RedisVectorStore(
 			new OpenAIEmbeddings({
